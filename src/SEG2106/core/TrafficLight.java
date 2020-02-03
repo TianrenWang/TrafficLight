@@ -16,7 +16,7 @@ public class TrafficLight implements EventHandler
 
   //TrafficLight State Machines
   enum Status { northAndSouthGreen, northAndSouthYellow, northAndSouthRed, westAndEastYellow,
-    northGreenArrow, northYellow, southGreenArrow, southYellow, westGreenArrow, westAndEastGreen }
+    northGreenArrow, northYellow, southGreenArrow, southYellow, westGreenArrow, northAndSouthArrow, westAndEastGreen }
   private Status status;
   enum TrafficMode {low, moderate, high}
   private TrafficMode mode;
@@ -55,9 +55,8 @@ public class TrafficLight implements EventHandler
 
     Status aStatus = status;
 
-    if (mode == TrafficMode.high){
-      switch (aStatus)
-      {
+    if (mode == TrafficMode.high) {
+      switch (aStatus) {
         case northGreenArrow:
           setStatus(Status.northYellow);
           wasEventProcessed = true;
@@ -78,7 +77,17 @@ public class TrafficLight implements EventHandler
           setStatus(Status.northYellow);
           wasEventProcessed = true;
       }
-    } else {
+    }
+      if (mode == TrafficMode.low){
+        switch (aStatus)
+        {
+          case northAndSouthArrow:
+            setStatus(Status.northAndSouthGreen);
+            wasEventProcessed = true;
+            break;
+        }
+      }
+
       switch (aStatus) {
         case northAndSouthGreen:
           setStatus(Status.northAndSouthYellow);
@@ -91,35 +100,47 @@ public class TrafficLight implements EventHandler
         default:
           // Other states do respond to this event
       }
-    }
+
 
     return wasEventProcessed;
   }
 
-  public boolean timerYellow()
-  {
+  public boolean timerYellow() {
     boolean wasEventProcessed = false;
 
     Status aStatus = status;
-    if (mode == TrafficMode.high){
-        switch (aStatus) {
-          case northYellow:
-            setStatus(Status.southGreenArrow);
-            wasEventProcessed = true;
-            break;
-          case southYellow:
-            setStatus(Status.westGreenArrow);
-            wasEventProcessed = true;
-            break;
-          case westAndEastYellow:
-            setStatus(Status.northGreenArrow);
-            wasEventProcessed = true;
-            break;
-          default:
-            setStatus(Status.southGreenArrow);
-            wasEventProcessed = true;
-        }
+    if (mode == TrafficMode.high) {
+      switch (aStatus) {
+        case northYellow:
+          setStatus(Status.southGreenArrow);
+          wasEventProcessed = true;
+          break;
+        case southYellow:
+          setStatus(Status.westGreenArrow);
+          wasEventProcessed = true;
+          break;
+        case westAndEastYellow:
+          setStatus(Status.northGreenArrow);
+          wasEventProcessed = true;
+          break;
+        default:
+          setStatus(Status.southGreenArrow);
+          wasEventProcessed = true;
+      }
+    }
+    else if (mode == TrafficMode.low) {
+      switch (aStatus) {
+        case northAndSouthYellow:
+          setStatus(Status.northAndSouthRed);
+          wasEventProcessed = true;
+          break;
+
+        default:
+          setStatus(Status.northAndSouthArrow);
+          wasEventProcessed = true;
+      }
     } else {
+
       switch (aStatus) {
         case northAndSouthYellow:
           setStatus(Status.northAndSouthRed);
@@ -134,9 +155,11 @@ public class TrafficLight implements EventHandler
       }
     }
 
-    return wasEventProcessed;
-  }
 
+
+      return wasEventProcessed;
+
+  }
   private void setStatus(Status aStatus)
   {
     status = aStatus;
@@ -215,6 +238,7 @@ public class TrafficLight implements EventHandler
           trafficLightManager.eastYellow();
           break;
       }
+
     } else {
       System.out.println("Simple");
       // entry actions and do activities
@@ -260,6 +284,12 @@ public class TrafficLight implements EventHandler
           // line 35 "model.ump"
           trafficLightManager.eastYellow();
           break;
+        case northAndSouthArrow:
+          trafficLightManager.northArrow();
+          trafficLightManager.southArrow();
+          trafficLightManager.eastRed();
+          trafficLightManager.westRed();
+          break;
       }
     }
   }
@@ -275,8 +305,12 @@ public boolean moderateTraffic() {
 
 @Override
 public boolean lowTraffic() {
-	// TODO Auto-generated method stub
-	return false;
+  boolean wasEventProcessed = false;
+  mode = TrafficMode.low;
+  status = Status.northAndSouthArrow;
+
+  return wasEventProcessed;
+
 }
 
 @Override
@@ -288,3 +322,4 @@ public boolean highTraffic() {
 }
 
 }
+

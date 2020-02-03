@@ -14,5 +14,6 @@ public class Main {
 			trafficLightManager.setTrafficCondition(args[0]);
 		}
 
+
 	}
 }

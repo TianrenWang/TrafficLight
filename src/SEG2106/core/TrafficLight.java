@@ -350,6 +350,57 @@ public class TrafficLight implements EventHandler
           break;
       }
     }
+    else if (mode == TrafficMode.low){
+    switch(status)
+    {
+      case northAndSouthGreen:
+        // line 8 "model.ump"
+        trafficLightManager.northGreen();
+        // line 9 "model.ump"
+        trafficLightManager.southGreen();
+        // line 10 "model.ump"
+        trafficLightManager.westRed();
+        // line 11 "model.ump"
+        trafficLightManager.eastRed();
+        break;
+      case northAndSouthYellow:
+        // line 16 "model.ump"
+        trafficLightManager.northYellow();
+        // line 17 "model.ump"
+        trafficLightManager.southYellow();
+        // line 18 "model.ump"
+        trafficLightManager.westRed();
+        // line 19 "model.ump"
+        trafficLightManager.eastRed();
+        break;
+      case northAndSouthRed:
+        // line 24 "model.ump"
+        trafficLightManager.northRed();
+        // line 25 "model.ump"
+        trafficLightManager.southRed();
+        // line 26 "model.ump"
+        trafficLightManager.westGreen();
+        // line 27 "model.ump"
+        trafficLightManager.eastGreen();
+        break;
+      case westAndEastYellow:
+        // line 32 "model.ump"
+        trafficLightManager.northRed();
+        // line 33 "model.ump"
+        trafficLightManager.southRed();
+        // line 34 "model.ump"
+        trafficLightManager.westYellow();
+        // line 35 "model.ump"
+        trafficLightManager.eastYellow();
+        break;
+      case northAndSouthArrow:
+        trafficLightManager.northArrow();
+        trafficLightManager.southArrow();
+        trafficLightManager.eastRed();
+        trafficLightManager.westRed();
+        break;
+    }
+  }
     else {
       System.out.println("Simple");
       // entry actions and do activities
@@ -395,12 +446,7 @@ public class TrafficLight implements EventHandler
           // line 35 "model.ump"
           trafficLightManager.eastYellow();
           break;
-        case northAndSouthArrow:
-          trafficLightManager.northArrow();
-          trafficLightManager.southArrow();
-          trafficLightManager.eastRed();
-          trafficLightManager.westRed();
-          break;
+
       }
     }
   }

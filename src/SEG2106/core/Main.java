@@ -10,9 +10,10 @@ public class Main {
 		new TrafficLight(trafficLightManager);
 		
 		// Set the traffic condition
-		if (args.length > 0){
+		/*if (args.length > 0){
 			trafficLightManager.setTrafficCondition(args[0]);
-		}
+		}*/
+		trafficLightManager.setTrafficCondition("lowTraffic");
 
 
 	}

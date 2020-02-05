@@ -455,10 +455,10 @@ public class TrafficLight implements EventHandler
   {}
 
 @Override
-public boolean moderateTraffic() { //integrated by shifeng
+public boolean moderateTraffic() {
 
 
-    boolean wasEventProcessed = false;
+    boolean wasEventProcessed = true;
     mode = TrafficMode.moderate;
     status = Status.northGreenArrow;
     return wasEventProcessed;
@@ -466,7 +466,7 @@ public boolean moderateTraffic() { //integrated by shifeng
 
 @Override
 public boolean lowTraffic() {
-  boolean wasEventProcessed = false;
+  boolean wasEventProcessed = true;
   mode = TrafficMode.low;
   status = Status.northAndSouthArrow;
 
@@ -476,7 +476,7 @@ public boolean lowTraffic() {
 
 @Override
 public boolean highTraffic() {
-  boolean wasEventProcessed = false;
+  boolean wasEventProcessed = true;
   mode = TrafficMode.high;
   status = Status.northGreenArrow;
   return wasEventProcessed;
